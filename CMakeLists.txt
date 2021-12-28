@@ -11,15 +11,17 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_GENERATOR "Ninja")
-set(CMAKE_PREFIX_PATH "/home/dsistemas/Desktop/CPP/libraries/qt/6.2.2/build_static_1")
-set(QT_QMAKE_EXECUTABLE "/home/dsistemas/Desktop/CPP/libraries/qt/6.2.2/build_static_1/bin/qmake")
+set(LIBRARIES_FOLDER_PREFIX "/home/dsistemas/Desktop/CPP/libraries/") #<== THIS PATH MUST BE EXISTS
 
-#include_directories( "/home/dsistemas/Desktop/CPP/libraries/qt/6.2.2/build_static_1/include" )
+message("LIBRARIES_FOLDER_PREFIX => " status ${LIBRARIES_FOLDER_PREFIX})
+
+set(CMAKE_GENERATOR "Ninja")
+set(CMAKE_PREFIX_PATH ${LIBRARIES_FOLDER_PREFIX}qt/6.2.2/build_static_1)
+set(QT_QMAKE_EXECUTABLE ${LIBRARIES_FOLDER_PREFIX}qt/6.2.2/build_static_1/bin/qmake)
 
 add_library(HV_LIBRARY STATIC IMPORTED GLOBAL)
-set_target_properties(HV_LIBRARY PROPERTIES IMPORTED_LOCATION /home/dsistemas/Desktop/CPP/libraries/libhv/lib/libhv_static.a)
-target_include_directories(HV_LIBRARY INTERFACE /home/dsistemas/Desktop/CPP/libraries/libhv/include)
+set_target_properties(HV_LIBRARY PROPERTIES IMPORTED_LOCATION ${LIBRARIES_FOLDER_PREFIX}libhv/lib/libhv_static.a)
+target_include_directories(HV_LIBRARY INTERFACE ${LIBRARIES_FOLDER_PREFIX}libhv/include)
 
 set(LIBRT "/usr/lib/x86_64-linux-gnu/librt.a") #<-- Add this
 
