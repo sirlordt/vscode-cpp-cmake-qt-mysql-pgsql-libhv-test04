@@ -47,7 +47,6 @@
            },
            "command": "cmake",
            "args": [
-               "-no-warn-unused-cli",
                "-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
                "-DCMAKE_BUILD_TYPE:STRING=Release",
                "-DCMAKE_C_COMPILER:FILEPATH=/bin/x86_64-linux-gnu-gcc-9",
@@ -75,7 +74,7 @@
                 "--config",
                 "Release",
                 "--target",
-                "main",
+                "test03",
                 "-j",
                 "6",
                 "--"
@@ -109,7 +108,6 @@
             },
             "command": "cmake",
             "args": [
-                "-no-warn-unused-cli",
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
                 "-DCMAKE_BUILD_TYPE:STRING=Debug",
                 "-DCMAKE_C_COMPILER:FILEPATH=/bin/x86_64-linux-gnu-gcc-9",
@@ -137,7 +135,7 @@
                  "--config",
                  "Debug",
                  "--target",
-                 "main",
+                 "test03",
                  "-j",
                  "6",
                  "--"
