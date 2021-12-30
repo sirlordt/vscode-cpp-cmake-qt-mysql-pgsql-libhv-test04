@@ -1,72 +1,104 @@
-//#include <QCoreApplication>
-
-//#include <hv/hv.h>
-//#include "hv/hssl.h"
-//#include "hv/hmain.h"
-//#include "hv/iniparser.h"
-//#include "hv/HttpServer.h"
-
-//hv::HttpServer  g_http_server;
-//hv::HttpService g_http_service;
-
-//void print_version() {
-//  printf("%s version %s\n", g_main_ctx.program_name, hv_version());
-//}
-
-//int main(int argc, char *argv[])
-//{
-//    main_ctx_init(argc, argv);
-
-//    QCoreApplication a(argc, argv);
-
-//    qDebug( "Hello World" );
-
-//    print_version();
-
-//    return a.exec();
-//}
-
-//#include "hv/TcpServer.h"
-//using namespace hv;
-
-//int main() {
-//    int port = 1234;
-//    TcpServer srv;
-//    int listenfd = srv.createsocket(port);
-//    if (listenfd < 0) {
-//        return -1;
-//    }
-//    printf("server listen on port %d, listenfd=%d ...\n", port, listenfd);
-//    srv.onConnection = [](const SocketChannelPtr& channel) {
-//        std::string peeraddr = channel->peeraddr();
-//        if (channel->isConnected()) {
-//            printf("%s connected! connfd=%d\n", peeraddr.c_str(), channel->fd());
-//        } else {
-//            printf("%s disconnected! connfd=%d\n", peeraddr.c_str(), channel->fd());
-//        }
-//    };
-//    srv.onMessage = [](const SocketChannelPtr& channel, Buffer* buf) {
-//        // echo
-//        channel->write(buf);
-//    };
-//    srv.setThreadNum(4);
-//    srv.start();
-
-//    while (1) hv_sleep(1);
-//    return 0;
-//}
-
 #include "hv/HttpServer.h"
 
 #include <QCoreApplication>
-#include <QString>
 #include <QDebug>
-
+#include <QtSql>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QPluginLoader>
+#include <QString>
+#include <QtPlugin>
 
 #include "test01.h"
 
-int main() {
+Q_IMPORT_PLUGIN(QMYSQLDriverPlugin)
+Q_IMPORT_PLUGIN(QPSQLDriverPlugin)
+
+bool connectToMySQLDB() {
+
+  bool result = false;
+
+  qInfo() << "Opening database QMYSQL";
+
+  QSqlDatabase db1 = QSqlDatabase::addDatabase( "QMYSQL", "QMYSQL1" );
+
+  QSqlDatabase db2 = QSqlDatabase::addDatabase( "QMYSQL", "QMYSQL2" );
+
+  db1.setHostName( "127.0.0.1" );
+  db1.setDatabaseName( "TestDB" );
+  db1.setUserName( "root" );
+  db1.setPassword( "dsistemas" );
+
+  db2.setHostName( "127.0.0.1" );
+  db2.setDatabaseName( "TestDB" );
+  db2.setUserName( "root" );
+  db2.setPassword( "dsistemas" );
+
+  if ( !db1.open() || !db2.open()  ) {
+
+    qInfo() << "Failed to connect!" ;
+    qInfo() << "1" << db1.lastError().text();
+    qInfo() << "2" << db1.lastError().text();
+
+  }
+  else {
+
+    result = true;
+
+    qInfo() << "Connected";
+
+    db1.close();
+
+    db2.close();
+
+  }
+
+  return result;
+
+}
+
+bool connectToPGSQLDB() {
+
+  bool result = false;
+
+  qInfo() << "Opening database QPSQL";
+
+  QSqlDatabase db = QSqlDatabase::addDatabase( "QPSQL", "QPSQL1" );
+
+  db.setHostName( "127.0.0.1" );
+  db.setDatabaseName( "TestDB" );
+  db.setUserName( "root" );
+  db.setPassword( "dsistemas" );
+
+  if ( !db.open() ) {
+
+    qInfo() << "Failed to connect!" ;
+    qInfo() << db.lastError().text();
+
+  }
+  else {
+
+    result = true;
+
+    qInfo() << "Connected";
+
+    db.close();
+
+  }
+
+  return result;
+
+}
+
+int main() 
+{ 
+
+    connectToMySQLDB();
+
+    connectToPGSQLDB();
+
     HttpService router;
+
     router.GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
         return resp->String("pong");
     });
@@ -111,4 +143,5 @@ int main() {
     server.service = &router;
     http_server_run(&server);
     return 0;
+
 }

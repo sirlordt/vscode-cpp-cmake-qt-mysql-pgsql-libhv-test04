@@ -64,6 +64,7 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "variant": "cpp",
-        "qcoreapplication": "cpp"
+        "qcoreapplication": "cpp",
+        "qdebug": "cpp"
     },
 }

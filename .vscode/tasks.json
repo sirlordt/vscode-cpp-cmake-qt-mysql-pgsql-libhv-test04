@@ -49,8 +49,8 @@
            "args": [
                "-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
                "-DCMAKE_BUILD_TYPE:STRING=Release",
-               "-DCMAKE_C_COMPILER:FILEPATH=/bin/x86_64-linux-gnu-gcc-9",
-               "-DCMAKE_CXX_COMPILER:FILEPATH=/bin/x86_64-linux-gnu-g++-9",
+               "-DCMAKE_C_COMPILER:FILEPATH=/usr/bin/clang",
+               "-DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/clang++",
                "-H${workspaceRoot}", 
                "-B${workspaceRoot}/build/release",
                "-G",
@@ -74,7 +74,7 @@
                 "--config",
                 "Release",
                 "--target",
-                "test03",
+                "test04",
                 "-j",
                 "6",
                 "--"
@@ -110,8 +110,8 @@
             "args": [
                 "-DCMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE",
                 "-DCMAKE_BUILD_TYPE:STRING=Debug",
-                "-DCMAKE_C_COMPILER:FILEPATH=/bin/x86_64-linux-gnu-gcc-9",
-                "-DCMAKE_CXX_COMPILER:FILEPATH=/bin/x86_64-linux-gnu-g++-9",
+                "-DCMAKE_C_COMPILER:FILEPATH=/usr/bin/clang",
+                "-DCMAKE_CXX_COMPILER:FILEPATH=/usr/bin/clang++",
                 "-H${workspaceRoot}", 
                 "-B${workspaceRoot}/build/debug",
                 "-G",
@@ -135,7 +135,7 @@
                  "--config",
                  "Debug",
                  "--target",
-                 "test03",
+                 "test04",
                  "-j",
                  "6",
                  "--"
