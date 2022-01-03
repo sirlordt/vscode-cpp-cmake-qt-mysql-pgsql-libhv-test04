@@ -67,7 +67,7 @@ bool connectToPGSQLDB() {
 
   db.setHostName( "127.0.0.1" );
   db.setDatabaseName( "TestDB" );
-  db.setUserName( "root" );
+  db.setUserName( "postgres" );
   db.setPassword( "dsistemas" );
 
   if ( !db.open() ) {
